@@ -1,0 +1,83 @@
+/snap/clion/260/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/260/bin/ninja/linux/x64/ninja -G Ninja -S /home/hoo/project/bustub -B /home/hoo/project/bustub/cmake-build-debug
+-- The C compiler identification is GNU 13.1.0
+-- The CXX compiler identification is Clang 12.0.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- You're using Clang 12.0.1
+-- BusTub/main found clang-format at /usr/bin/clang-format
+-- BusTub/main found clang-tidy at /usr/bin/clang-tidy
+-- BusTub/main found clang-apply-replacements at /usr/bin/clang-apply-replacements-12
+-- BusTub/main found cpplint at /home/hoo/project/bustub/build_support/cpplint.py
+Build mode: Debug
+address sanitizer will be enabled in debug mode.
+-- CMAKE_CXX_FLAGS: 
+-- CMAKE_CXX_FLAGS_DEBUG: -g -Wall -Wextra -Werror -Wno-unused-parameter -Wno-attributes -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
+-- CMAKE_EXE_LINKER_FLAGS: 
+-- CMAKE_SHARED_LINKER_FLAGS: 
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+CMake Deprecation Warning at third_party/murmur3/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+CMake Deprecation Warning at third_party/libpg_query/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- Found Python: /usr/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+-- Module support is disabled.
+-- Version: 9.0.0
+-- Build type: Debug
+-- CXX_STANDARD: 17
+-- Performing Test has_std_17_flag
+-- Performing Test has_std_17_flag - Success
+-- Performing Test has_std_1z_flag
+-- Performing Test has_std_1z_flag - Success
+-- Required features: cxx_variadic_templates
+-- Performing Test HAS_NULLPTR_WARNING
+-- Performing Test HAS_NULLPTR_WARNING - Success
+CMake Deprecation Warning at third_party/linenoise/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+CMake Deprecation Warning at third_party/libfort/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- libfort build options:  wchar support = ON;  build type = common
+CMake Deprecation Warning at third_party/utf8proc/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- Configuring done (3.3s)
+-- Generating done (0.2s)
+-- Build files have been written to: /home/hoo/project/bustub/cmake-build-debug

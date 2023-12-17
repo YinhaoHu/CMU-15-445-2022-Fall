@@ -1,0 +1,157 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "lib/libfort.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"install",
+			"include_directories",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"third_party/libfort/lib/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 4,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 37,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 145,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 144,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 8,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "         -Wall         -Wextra         -Wdouble-promotion         -Wshadow         -Wformat=2         -Wno-variadic-macros         -Wcast-align         -Wstrict-aliasing=2         -Wstrict-overflow=5         -Wfloat-equal         -Wwrite-strings                      -Wtrampolines             -Wlogical-op -Wpedantic -g -fPIC -fdiagnostics-color=always"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 4,
+					"path" : "/home/hoo/project/bustub/src"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/hoo/project/bustub/src/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/hoo/project/bustub/test/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/hoo/project/bustub/third_party"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/hoo/project/bustub/third_party/fmt/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/hoo/project/bustub/third_party/libpg_query/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/hoo/project/bustub/third_party/argparse/include"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/hoo/project/bustub/third_party/libfort/lib"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"id" : "fort::@3aed540ff5b11e52a122",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "lib"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/usr/local"
+		}
+	},
+	"name" : "fort",
+	"nameOnDisk" : "libfort.a",
+	"paths" : 
+	{
+		"build" : "third_party/libfort/lib",
+		"source" : "third_party/libfort/lib"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "third_party/libfort/lib/fort.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

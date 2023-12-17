@@ -1,0 +1,10 @@
+statement ok
+create table t1_50k(x int, y int);
+
+statement ok
+create index t1x on t1_50k(x);
+
+statement ok
+explain select count(*), max(t1_50k.x), max(t1_50k.y), max(__mock_t2_100k.x), max(__mock_t2_100k.y), max(__mock_t3_1k.x), max(__mock_t3_1k.y) from (
+    t1_50k inner join __mock_t2_100k on t1_50k.x = __mock_t2_100k.x
+) inner join __mock_t3_1k on __mock_t2_100k.y = __mock_t3_1k.y;

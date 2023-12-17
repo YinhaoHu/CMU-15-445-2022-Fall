@@ -1,0 +1,241 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./bigint_type.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./boolean_type.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./decimal_type.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./integer_parent_type.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./integer_type.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./smallint_type.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./timestamp_type.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./tinyint_type.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./type.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./value.cpp.o"
+		},
+		{
+			"path" : "src/type/CMakeFiles/bustub_type.dir/./varlen_type.cpp.o"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"src/type/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 145,
+				"parent" : 2
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 144,
+				"parent" : 2
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -Wall -Wextra -Werror -Wno-unused-parameter -Wno-attributes -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -std=gnu++17 -fPIC -fcolor-diagnostics"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/home/hoo/project/bustub/src"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/hoo/project/bustub/src/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/hoo/project/bustub/test/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/hoo/project/bustub/third_party"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/hoo/project/bustub/third_party/fmt/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/hoo/project/bustub/third_party/libpg_query/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/hoo/project/bustub/third_party/argparse/include"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "17"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			]
+		}
+	],
+	"id" : "bustub_type::@b66a443c9d0dbef81495",
+	"name" : "bustub_type",
+	"paths" : 
+	{
+		"build" : "src/type",
+		"source" : "src/type"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/bigint_type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/boolean_type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/decimal_type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/integer_parent_type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/integer_type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/smallint_type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/timestamp_type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/tinyint_type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/value.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/type/varlen_type.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "OBJECT_LIBRARY"
+}

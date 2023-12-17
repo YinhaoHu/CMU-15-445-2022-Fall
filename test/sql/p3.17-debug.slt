@@ -1,0 +1,4 @@
+statement ok
+select v6, count(v6) + count(*) from (
+    select distinct v6 from __mock_agg_input_big
+) group by v6

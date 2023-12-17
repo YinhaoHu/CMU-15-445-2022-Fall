@@ -1,0 +1,875 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "lib/libbustub.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_link_libraries",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"src/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 15,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 47,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 145,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 144,
+				"parent" : 3
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "bustub_binder::@1fffbdf740d5e0ce3dbf"
+		},
+		{
+			"id" : "bustub_statement::@c6bbd4de56dcbc59be82"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_buffer::@1617a6d482f49dd99a3b"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_catalog::@ce6f7de718ee25dd7b75"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_common::@af79f3804eddddbfa7f1"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_concurrency::@34bc8be5665c6e50ffc9"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_container_disk_hash::@78e0fc9e1380f2353da7"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_container_hash::@cc8d3ea19b8fc4e8cd3f"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_execution::@2ecaf0337b5ea0607bcf"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_recovery::@48db89e80c4e2e9d10b7"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_storage_disk::@cd9f8c7a33d4e1eef531"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_storage_index::@8df66c4666f108826646"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_storage_page::@2d3910e9e84a28d5e697"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_storage_table::@a34fe8f9fdb5c5b5caae"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_type::@b66a443c9d0dbef81495"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_planner::@6d7bf296ecf12e1333a6"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_primer::@a144d820a5e39e5e93b0"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_optimizer::@c5fe013df27d67b382af"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "bustub_murmur3::@3fd610ecf655e8f6cd20"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "duckdb_pg_query::@dab728fafae0456c43a6"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "fmt::@7291a5c2c450ae686be0"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "fort::@3aed540ff5b11e52a122"
+		}
+	],
+	"id" : "bustub::@145eef247bfb46b6828c",
+	"name" : "bustub",
+	"nameOnDisk" : "libbustub.a",
+	"paths" : 
+	{
+		"build" : "src",
+		"source" : "src"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Object Libraries",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44,
+				45,
+				46,
+				47,
+				48,
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59,
+				60,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73,
+				74,
+				75,
+				76,
+				77,
+				78,
+				79,
+				80,
+				81,
+				82,
+				83,
+				84,
+				85,
+				86,
+				87,
+				88,
+				89,
+				90,
+				91,
+				92,
+				93,
+				94,
+				95,
+				96,
+				97,
+				98,
+				99,
+				100
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/statement/CMakeFiles/bustub_statement.dir/create_statement.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/statement/CMakeFiles/bustub_statement.dir/delete_statement.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/statement/CMakeFiles/bustub_statement.dir/explain_statement.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/statement/CMakeFiles/bustub_statement.dir/index_statement.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/statement/CMakeFiles/bustub_statement.dir/insert_statement.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/statement/CMakeFiles/bustub_statement.dir/select_statement.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/statement/CMakeFiles/bustub_statement.dir/update_statement.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/binder.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/bind_create.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/bind_insert.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/bind_select.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/bind_variable.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/bound_statement.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/fmt_impl.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/keyword_helper.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/node_tag_to_string.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/binder/CMakeFiles/bustub_binder.dir/transformer.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/buffer/CMakeFiles/bustub_buffer.dir/buffer_pool_manager_instance.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/buffer/CMakeFiles/bustub_buffer.dir/clock_replacer.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/buffer/CMakeFiles/bustub_buffer.dir/lru_replacer.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/buffer/CMakeFiles/bustub_buffer.dir/lru_k_replacer.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/catalog/CMakeFiles/bustub_catalog.dir/column.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/catalog/CMakeFiles/bustub_catalog.dir/table_generator.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/catalog/CMakeFiles/bustub_catalog.dir/schema.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/common/CMakeFiles/bustub_common.dir/bustub_instance.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/common/CMakeFiles/bustub_common.dir/config.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/common/CMakeFiles/bustub_common.dir/util/string_util.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/concurrency/CMakeFiles/bustub_concurrency.dir/lock_manager.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/concurrency/CMakeFiles/bustub_concurrency.dir/transaction_manager.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/aggregation_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/delete_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/executor_factory.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/filter_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/fmt_impl.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/hash_join_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/index_scan_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/insert_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/limit_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/mock_scan_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/nested_index_join_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/nested_loop_join_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/plan_node.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/projection_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/seq_scan_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/sort_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/topn_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/update_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/execution/CMakeFiles/bustub_execution.dir/values_executor.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/recovery/CMakeFiles/bustub_recovery.dir/checkpoint_manager.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/recovery/CMakeFiles/bustub_recovery.dir/log_manager.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/recovery/CMakeFiles/bustub_recovery.dir/log_recovery.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/bigint_type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/boolean_type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/decimal_type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/integer_parent_type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/integer_type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/smallint_type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/timestamp_type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/tinyint_type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/value.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/type/CMakeFiles/bustub_type.dir/varlen_type.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/planner/CMakeFiles/bustub_planner.dir/expression_factory.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/planner/CMakeFiles/bustub_planner.dir/plan_aggregation.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/planner/CMakeFiles/bustub_planner.dir/plan_expression.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/planner/CMakeFiles/bustub_planner.dir/plan_insert.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/planner/CMakeFiles/bustub_planner.dir/plan_table_ref.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/planner/CMakeFiles/bustub_planner.dir/plan_select.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/planner/CMakeFiles/bustub_planner.dir/planner.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/primer/CMakeFiles/bustub_primer.dir/p0_trie.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/eliminate_true_filter.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/merge_projection.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/merge_filter_nlj.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/merge_filter_scan.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/nlj_as_hash_join.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/nlj_as_index_join.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/optimizer.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/optimizer_custom_rules.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/order_by_index_scan.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/optimizer/CMakeFiles/bustub_optimizer.dir/sort_limit_as_topn.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/container/hash/CMakeFiles/bustub_container_hash.dir/extendible_hash_table.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/container/disk/hash/CMakeFiles/bustub_container_disk_hash.dir/disk_extendible_hash_table.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/container/disk/hash/CMakeFiles/bustub_container_disk_hash.dir/linear_probe_hash_table.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/disk/CMakeFiles/bustub_storage_disk.dir/disk_manager.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/disk/CMakeFiles/bustub_storage_disk.dir/disk_manager_memory.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/index/CMakeFiles/bustub_storage_index.dir/b_plus_tree_index.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/index/CMakeFiles/bustub_storage_index.dir/b_plus_tree.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/index/CMakeFiles/bustub_storage_index.dir/extendible_hash_table_index.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/index/CMakeFiles/bustub_storage_index.dir/index_iterator.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/index/CMakeFiles/bustub_storage_index.dir/linear_probe_hash_table_index.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/page/CMakeFiles/bustub_storage_page.dir/b_plus_tree_internal_page.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/page/CMakeFiles/bustub_storage_page.dir/b_plus_tree_leaf_page.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/page/CMakeFiles/bustub_storage_page.dir/b_plus_tree_page.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/page/CMakeFiles/bustub_storage_page.dir/hash_table_block_page.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/page/CMakeFiles/bustub_storage_page.dir/hash_table_bucket_page.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/page/CMakeFiles/bustub_storage_page.dir/hash_table_directory_page.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/page/CMakeFiles/bustub_storage_page.dir/header_page.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/page/CMakeFiles/bustub_storage_page.dir/table_page.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/table/CMakeFiles/bustub_storage_table.dir/table_heap.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/table/CMakeFiles/bustub_storage_table.dir/table_iterator.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/src/storage/table/CMakeFiles/bustub_storage_table.dir/tuple.cpp.o",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

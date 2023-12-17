@@ -1,0 +1,11 @@
+statement ok
+CREATE TABLE t1(x INT, y INT);
+
+statement ok
+CREATE TABLE t2(x INT, y INT);
+
+statement ok
+CREATE INDEX t1x ON t1(x);
+
+statement ok
+explain select * from t2 join t1 on t1.x=t2.x;

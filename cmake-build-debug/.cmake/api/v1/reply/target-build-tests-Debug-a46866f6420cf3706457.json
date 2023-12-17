@@ -1,0 +1,310 @@
+{
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"add_dependencies"
+		],
+		"files" : 
+		[
+			"test/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 14,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 91,
+				"parent" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "binder_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "buffer_pool_manager_instance_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "clock_replacer_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 5,
+			"id" : "lru_k_replacer_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "lru_replacer_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "catalog_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 8,
+			"id" : "rwlatch_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 9,
+			"id" : "deadlock_detection_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 10,
+			"id" : "lock_manager_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 11,
+			"id" : "transaction_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 12,
+			"id" : "hash_table_page_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 13,
+			"id" : "hash_table_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 14,
+			"id" : "extendible_hash_table_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 15,
+			"id" : "starter_trie_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 16,
+			"id" : "recovery_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 17,
+			"id" : "b_plus_tree_concurrent_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 18,
+			"id" : "b_plus_tree_contention_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 19,
+			"id" : "b_plus_tree_delete_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 20,
+			"id" : "b_plus_tree_insert_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 21,
+			"id" : "disk_manager_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 22,
+			"id" : "tmp_tuple_page_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 23,
+			"id" : "tuple_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 24,
+			"id" : "type_test::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 25,
+			"id" : "sqllogictest::@8a5ec30ff805e02bacef"
+		}
+	],
+	"id" : "build-tests::@36f028580bb02cc8272a",
+	"name" : "build-tests",
+	"paths" : 
+	{
+		"build" : "test",
+		"source" : "test"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/test/CMakeFiles/build-tests",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/test/CMakeFiles/build-tests.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}
