@@ -15,4 +15,4 @@
 
 ## Future
 
-* Interview questions.
+* Interview questions and introduction in curriculum vitae.
