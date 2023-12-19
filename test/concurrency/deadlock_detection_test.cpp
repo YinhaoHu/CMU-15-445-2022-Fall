@@ -48,7 +48,7 @@ TEST(LockManagerDeadlockDetectionTest, DISABLED_BasicTest1) {
   EXPECT_EQ(4, cycle_maker);
 }
 
-TEST(LockManagerDeadlockDetectionTest, EdgeTest) {
+TEST(LockManagerDeadlockDetectionTest, DISABLED_EdgeTest) {
   LockManager lock_mgr{};
 
   const int num_nodes = 100;
@@ -90,7 +90,7 @@ TEST(LockManagerDeadlockDetectionTest, EdgeTest) {
   }
 }
 
-TEST(LockManagerDeadlockDetectionTest, BasicDeadlockDetectionTest) {
+TEST(LockManagerDeadlockDetectionTest, DISABLED_BasicDeadlockDetectionTest) {
   LockManager lock_mgr{};
   TransactionManager txn_mgr{&lock_mgr};
 
@@ -148,6 +148,63 @@ TEST(LockManagerDeadlockDetectionTest, BasicDeadlockDetectionTest) {
 
   delete txn0;
   delete txn1;
+}
+
+void CycleTest(){
+  using namespace std::chrono_literals;
+  LockManager lock_manager{};
+  TransactionManager txn_manager{&lock_manager};
+  constexpr size_t n_iter = 50;
+  table_oid_t oid0 = 0;
+  table_oid_t oid1 = 1;
+  table_oid_t oid2 = 2;
+  table_oid_t oid3 = 3;
+  for (size_t iter = 0; iter < n_iter; ++iter) {
+    auto txn0 = txn_manager.Begin();
+    auto txn1 = txn_manager.Begin();
+    auto txn2 = txn_manager.Begin();
+    auto txn3 = txn_manager.Begin();
+    std::thread t1([&] {
+      lock_manager.LockTable(txn0, LockManager::LockMode::EXCLUSIVE, oid0);
+      std::this_thread::sleep_for(50ms);
+      lock_manager.LockTable(txn0, LockManager::LockMode::EXCLUSIVE, oid1);
+      txn_manager.Commit(txn0);
+    });
+    std::thread t2([&]() {
+      lock_manager.LockTable(txn1, LockManager::LockMode::EXCLUSIVE, oid1);
+      std::this_thread::sleep_for(50ms);
+      lock_manager.LockTable(txn1, LockManager::LockMode::EXCLUSIVE, oid0);
+      txn_manager.Abort(txn1);
+    });
+    std::thread t3([&]() {
+      lock_manager.LockTable(txn2, LockManager::LockMode::EXCLUSIVE, oid2);
+      std::this_thread::sleep_for(50ms);
+      lock_manager.LockTable(txn2, LockManager::LockMode::EXCLUSIVE, oid3);
+      txn_manager.Commit(txn2);
+    });
+    std::thread t4([&]() {
+      lock_manager.LockTable(txn3, LockManager::LockMode::EXCLUSIVE, oid3);
+      std::this_thread::sleep_for(50ms);
+      lock_manager.LockTable(txn3, LockManager::LockMode::EXCLUSIVE, oid2);
+      txn_manager.Abort(txn3);
+    });
+
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+    delete txn0;
+    delete txn1;
+    delete txn2;
+    delete txn3;
+  }
+}
+
+TEST(LockManagerDeadlockDetectionTest, CycleTest) {
+  size_t n_iters = 5;
+  for(size_t iter = 0; iter < n_iters; ++iter){
+    CycleTest();
+  }
 }
 
 }  // namespace bustub

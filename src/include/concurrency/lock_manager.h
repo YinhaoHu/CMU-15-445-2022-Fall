@@ -73,7 +73,6 @@ class LockManager {
     std::list<LockRequest *> request_queue_;
     /** For notifying blocked transactions on this rid */
     std::condition_variable cv_;
-    std::mutex cv_mutex_;
     txn_id_t wake_id_ = INVALID_TXN_ID;
     /** txn_id of an upgrading transaction (if any) */
     txn_id_t upgrading_ = INVALID_TXN_ID;
@@ -339,6 +338,8 @@ class LockManager {
   static auto LockModeToString(LockMode lock_mode) -> std::string_view;
 
  private:
+  auto TransactionStateToString(const TransactionState &state) const -> std::string_view;
+
   auto IsTransactionEnded(Transaction *txn) -> bool;
   /**
    * @brief Check whether the transaction who wants to acquire a new_mode lock on the request_queue should wait or not.
@@ -395,9 +396,14 @@ class LockManager {
 
   void AbortTransaction(Transaction *txn, const AbortReason &abort_reason);
 
+  /**
+   *
+   * @return The first bool indicates the granted status(success or not). The second bool indicates the waking status(
+   * whether this thread should notify_all the cv or not)
+   */
   auto RequestLock(Transaction *txn, const LockMode &lock_mode, const std::shared_ptr<LockRequestQueue> &request_queue,
                    std::list<LockRequest *>::iterator request_iter, std::unique_lock<std::mutex> &request_queue_lock)
-      -> bool;
+      -> std::pair<bool, bool>;
 
   /**
    * @brief Find whether there is a cycle from the source in the wait-for-graph.
@@ -425,8 +431,7 @@ class LockManager {
   /** Coordination */
   std::mutex row_lock_map_latch_;
 
-  std::unordered_map<txn_id_t, std::shared_ptr<LockRequestQueue>> waiting_transactions_;
-  std::mutex waiting_transactions_latch_;
+  std::unordered_map<txn_id_t, std::unordered_set<std::shared_ptr<LockRequestQueue>>> waiting_transactions_;
 
   std::atomic<bool> enable_cycle_detection_;
   std::thread *cycle_detection_thread_;

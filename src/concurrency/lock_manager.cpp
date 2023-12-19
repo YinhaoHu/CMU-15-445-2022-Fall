@@ -58,8 +58,9 @@ inline void foo(Args... args) {}
 
 namespace bustub {
 auto LockManager::LockTable(Transaction *txn, LockMode lock_mode, const table_oid_t &oid) -> bool {
-  THREAD_DEBUG_LOG("[thread T%ld] txn %d(%p) acquire %s lock on table %d: start", DEBUG_THREAD_ID,
-                   txn->GetTransactionId(), txn, LockModeToString(lock_mode).data(), oid);
+  THREAD_DEBUG_LOG("[thread T%ld] txn %d(%p - %s) acquire %s lock on table %d: start", DEBUG_THREAD_ID,
+                   txn->GetTransactionId(), txn, TransactionStateToString(txn->GetState()).data(),
+                   LockModeToString(lock_mode).data(), oid);
   txn->LockTxn();
   if (txn->GetState() == TransactionState::ABORTED) {
     txn->UnlockTxn();
@@ -109,11 +110,21 @@ auto LockManager::LockTable(Transaction *txn, LockMode lock_mode, const table_oi
       auto this_request_iter = request_queue->request_queue_.insert(first_waiting_lock_request, held_lock_request);
       held_lock_request->granted_ = false;
       held_lock_request->lock_mode_ = lock_mode;
-      granted = RequestLock(txn, lock_mode, request_queue, this_request_iter, request_queue_lock);
+      bool want_wake;
+      std::tie(granted, want_wake) = RequestLock(txn, lock_mode, request_queue, this_request_iter, request_queue_lock);
       request_queue->upgrading_ = INVALID_TXN_ID;
       if (!granted) {
         delete held_lock_request;
+        txn->UnlockTxn();
+        if (want_wake) {
+          request_queue_lock.unlock();
+          request_queue->cv_.notify_all();
+        }
         return false;
+      }
+      if (want_wake) {
+        request_queue_lock.unlock();
+        request_queue->cv_.notify_all();
       }
     } else {
       // Lock upgrade is not allowed.
@@ -126,10 +137,20 @@ auto LockManager::LockTable(Transaction *txn, LockMode lock_mode, const table_oi
     std::unique_lock request_queue_lock(request_queue->latch_);
     request_queue->request_queue_.emplace_back(lock_request);
     auto lock_request_iter = std::prev(request_queue->request_queue_.end());
-    granted = RequestLock(txn, lock_mode, request_queue, lock_request_iter, request_queue_lock);
+    bool want_wake;
+    std::tie(granted, want_wake) = RequestLock(txn, lock_mode, request_queue, lock_request_iter, request_queue_lock);
     if (!granted) {
       delete lock_request;
+      txn->UnlockTxn();
+      if (want_wake) {
+        request_queue_lock.unlock();
+        request_queue->cv_.notify_all();
+      }
       return false;
+    }
+    if (want_wake) {
+      request_queue_lock.unlock();
+      request_queue->cv_.notify_all();
     }
   }
   // Update the status of the txn lock set. In this point, granted is true,
@@ -157,8 +178,8 @@ auto LockManager::LockTable(Transaction *txn, LockMode lock_mode, const table_oi
 }
 
 auto LockManager::UnlockTable(Transaction *txn, const table_oid_t &oid) -> bool {
-  THREAD_DEBUG_LOG("[thread T%ld] txn %d(%p) begins to release lock on table %d: start", DEBUG_THREAD_ID,
-                   txn->GetTransactionId(), txn, oid);
+  THREAD_DEBUG_LOG("[thread T%ld] txn %d(%p - %s) begins to release lock on table %d: start", DEBUG_THREAD_ID,
+                   txn->GetTransactionId(), txn, TransactionStateToString(txn->GetState()).data(), oid);
   txn->LockTxn();
   // txn hold any lock on table oid?
   if (txn->GetSharedTableLockSet()->count(oid) == 0 && txn->GetExclusiveTableLockSet()->count(oid) == 0 &&
@@ -180,7 +201,7 @@ auto LockManager::UnlockTable(Transaction *txn, const table_oid_t &oid) -> bool 
   LockMode lock_mode;
   {
     // Remove
-    std::scoped_lock lock(request_queue->latch_);
+    std::unique_lock lock(request_queue->latch_);
     auto lock_request = std::find_if(request_queue->request_queue_.begin(), request_queue->request_queue_.end(),
                                      [txn, oid](LockRequest *request) {
                                        return request->txn_id_ == txn->GetTransactionId() && oid == request->oid_;
@@ -191,20 +212,14 @@ auto LockManager::UnlockTable(Transaction *txn, const table_oid_t &oid) -> bool 
     // Wake
     auto first_waiting = std::find_if(request_queue->request_queue_.cbegin(), request_queue->request_queue_.cend(),
                                       [](LockRequest *request) { return !request->granted_; });
-    auto compatibility_check = [&request_queue, first_waiting, this]() {
-      if (first_waiting == request_queue->request_queue_.cend()) {
-        return false;
-      }
-      if (request_queue->request_queue_.size() == 1) {
-        return true;
-      }
-      return std::all_of(request_queue->request_queue_.cbegin(), first_waiting, [&](const LockRequest *request) {
-        return IsLockModeCompatible(request->lock_mode_, (*first_waiting)->lock_mode_);
-      });
-    }();
-    if (compatibility_check) {
+    if (first_waiting != request_queue->request_queue_.cend()) {
       request_queue->wake_id_ = (*first_waiting)->txn_id_;
+      THREAD_DEBUG_LOG("[thread %ld]txn %d notify %d. Queue: %s", DEBUG_THREAD_ID, txn->GetTransactionId(),
+                       request_queue->wake_id_, request_queue->ToString().c_str());
+      lock.unlock();
       request_queue->cv_.notify_all();
+    } else {
+      THREAD_DEBUG_LOG("[thread %ld]txn %d notify no one", DEBUG_THREAD_ID, txn->GetTransactionId());
     }
   }
   switch (txn->GetIsolationLevel()) {
@@ -251,9 +266,9 @@ auto LockManager::UnlockTable(Transaction *txn, const table_oid_t &oid) -> bool 
 }
 
 auto LockManager::LockRow(Transaction *txn, LockMode lock_mode, const table_oid_t &oid, const RID &rid) -> bool {
-  // TODO(Hoo): implement the intention lock on table.
-  THREAD_DEBUG_LOG("[thread T%ld] txn %d(%p) acquire %s lock on %d:%ld: start", DEBUG_THREAD_ID,
-                   txn->GetTransactionId(), txn, LockModeToString(lock_mode).data(), oid, rid.Get());
+  THREAD_DEBUG_LOG("[thread T%ld] txn %d(%p,%s) acquire %s lock on %d:%ld: start", DEBUG_THREAD_ID,
+                   txn->GetTransactionId(), txn, TransactionStateToString(txn->GetState()).data(),
+                   LockModeToString(lock_mode).data(), oid, rid.Get());
   txn->LockTxn();
   if (txn->GetState() == TransactionState::ABORTED) {
     txn->UnlockTxn();
@@ -323,11 +338,21 @@ auto LockManager::LockRow(Transaction *txn, LockMode lock_mode, const table_oid_
       auto this_request_iter = request_queue->request_queue_.insert(first_waiting_lock_request, held_lock_request);
       held_lock_request->granted_ = false;
       held_lock_request->lock_mode_ = lock_mode;
-      granted = RequestLock(txn, lock_mode, request_queue, this_request_iter, request_queue_lock);
+      bool want_wake;
+      std::tie(granted, want_wake) = RequestLock(txn, lock_mode, request_queue, this_request_iter, request_queue_lock);
       request_queue->upgrading_ = INVALID_TXN_ID;
       if (!granted) {
         delete held_lock_request;
+        txn->UnlockTxn();
+        if (want_wake) {
+          request_queue_lock.unlock();
+          request_queue->cv_.notify_all();
+        }
         return false;
+      }
+      if (want_wake) {
+        request_queue_lock.unlock();
+        request_queue->cv_.notify_all();
       }
     } else {
       // Lock upgrade is not allowed.
@@ -338,13 +363,22 @@ auto LockManager::LockRow(Transaction *txn, LockMode lock_mode, const table_oid_
     // Case B: Transaction does not hold any lock on the row.
     std::unique_lock request_queue_lock(request_queue->latch_);
     auto lock_request = new LockRequest(txn->GetTransactionId(), lock_mode, oid);
-    request_queue->request_queue_.emplace_back(lock_request);
-    auto lock_request_iter = std::prev(request_queue->request_queue_.end());
+    auto lock_request_iter = request_queue->request_queue_.insert(request_queue->request_queue_.end(), lock_request);
     // Whether this request lock can be granted immediately or wait.
-    granted = RequestLock(txn, lock_mode, request_queue, lock_request_iter, request_queue_lock);
+    bool want_wake;
+    std::tie(granted, want_wake) = RequestLock(txn, lock_mode, request_queue, lock_request_iter, request_queue_lock);
     if (!granted) {
       delete lock_request;
+      txn->UnlockTxn();
+      if (want_wake) {
+        request_queue_lock.unlock();
+        request_queue->cv_.notify_all();
+      }
       return false;
+    }
+    if (want_wake) {
+      request_queue_lock.unlock();
+      request_queue->cv_.notify_all();
     }
   }
   // Update the status of the txn lock set. In this point, granted is true,
@@ -365,8 +399,8 @@ auto LockManager::LockRow(Transaction *txn, LockMode lock_mode, const table_oid_
 }
 
 auto LockManager::UnlockRow(Transaction *txn, const table_oid_t &oid, const RID &rid) -> bool {
-  THREAD_DEBUG_LOG("[thread T%ld] txn %d(%p) begins to release lock on %d:%ld: start", DEBUG_THREAD_ID,
-                   txn->GetTransactionId(), txn, oid, rid.Get());
+  THREAD_DEBUG_LOG("[thread T%ld] txn %d(%p,%s) begins to release lock on %d:%ld: start", DEBUG_THREAD_ID,
+                   txn->GetTransactionId(), txn, TransactionStateToString(txn->GetState()).data(), oid, rid.Get());
   txn->LockTxn();
   // txn hold any lock on table oid?
   if (txn->GetSharedRowLockSet()->count(oid) == 0 && txn->GetExclusiveRowLockSet()->count(oid) == 0) {
@@ -380,7 +414,7 @@ auto LockManager::UnlockRow(Transaction *txn, const table_oid_t &oid, const RID 
   LockMode lock_mode;
   {
     // Remove
-    std::scoped_lock lock(request_queue->latch_);
+    std::unique_lock lock(request_queue->latch_);
     auto lock_request = std::find_if(request_queue->request_queue_.begin(), request_queue->request_queue_.end(),
                                      [txn, oid](LockRequest *request) {
                                        return request->txn_id_ == txn->GetTransactionId() && oid == request->oid_;
@@ -404,6 +438,7 @@ auto LockManager::UnlockRow(Transaction *txn, const table_oid_t &oid, const RID 
     }();
     if (first_waiting != request_queue->request_queue_.cend() && compatibility_check) {
       request_queue->wake_id_ = (*first_waiting)->txn_id_;
+      lock.unlock();
       request_queue->cv_.notify_all();
     }
   }
@@ -448,6 +483,7 @@ void LockManager::AddEdge(txn_id_t t1, txn_id_t t2) { waits_for_[t1].insert(t2);
 
 void LockManager::RemoveEdge(txn_id_t t1, txn_id_t t2) { waits_for_[t1].erase(t2); }
 
+// No lock is acquired in this function directly,
 auto LockManager::HasCycle(txn_id_t *txn_id) -> bool {
   return std::any_of(waits_for_.cbegin(), waits_for_.cend(),
                      [this, txn_id](const std::pair<txn_id_t, std::set<txn_id_t>> &source) {
@@ -455,6 +491,7 @@ auto LockManager::HasCycle(txn_id_t *txn_id) -> bool {
                      });
 }
 
+// No lock is acquired in this function.
 auto LockManager::GetEdgeList() -> std::vector<std::pair<txn_id_t, txn_id_t>> {
   std::vector<std::pair<txn_id_t, txn_id_t>> edges(0);
   for (const auto &[source, tails] : waits_for_) {
@@ -472,20 +509,21 @@ void LockManager::RunCycleDetection() {
       std::scoped_lock lock(waits_for_latch_);
       txn_id_t cycle_maker = INVALID_TXN_ID;
     DETECTION:
-      waits_for_.clear();
       BuildWaitForGraph();
       if (HasCycle(&cycle_maker)) {
         THREAD_DEBUG_LOG("[thread %ld] DeadlockDetector: begin to abort %d", DEBUG_THREAD_ID, cycle_maker);
         auto cycle_maker_txn = TransactionManager::GetTransaction(cycle_maker);
-        cycle_maker_txn->LockTxn();
         cycle_maker_txn->SetState(TransactionState::ABORTED);
-        cycle_maker_txn->UnlockTxn();
-        waiting_transactions_latch_.lock();
         BUSTUB_ASSERT(waiting_transactions_.count(cycle_maker) != 0,
                       "cycle maker has to be in the waiting transactions");
-        waiting_transactions_[cycle_maker]->wake_id_ = cycle_maker;
-        waiting_transactions_[cycle_maker]->cv_.notify_all();
-        waiting_transactions_latch_.unlock();
+        for (auto &queue : waiting_transactions_[cycle_maker]) {
+          {
+            std::lock_guard queue_lock(queue->latch_);
+            queue->wake_id_ = cycle_maker;
+          }
+          queue->cv_.notify_all();
+        }
+        waits_for_.clear();
         goto DETECTION;
       }
     }
@@ -501,7 +539,8 @@ auto LockManager::IsLockModeCauseWait(const bustub::LockManager::LockRequestQueu
   if (request_queue.request_queue_.size() == 1) {
     return false;
   }
-  return !std::all_of(request_queue.request_queue_.cbegin(), request_iter,
+  std::list<LockRequest *>::const_reverse_iterator reversed_request_iter(request_iter);
+  return !std::all_of(reversed_request_iter, request_queue.request_queue_.crend(),
                       [new_mode, this](const LockRequest *lock_request) {
                         return lock_request->granted_ && IsLockModeCompatible(new_mode, lock_request->lock_mode_);
                       });
@@ -637,9 +676,15 @@ auto LockManager::RowLockUpgradeCheck(const LockMode &old_mode, const LockMode &
 
 auto LockManager::EnsureProperTableLockForRow(const LockMode &row_lock_mode, const table_oid_t &oid) -> bool {
   table_lock_map_latch_.lock();
-  auto &table_lock_request_queue = table_lock_map_[oid];
+  auto no_table_lock = (table_lock_map_.count(oid) == 0);
+  std::shared_ptr<LockRequestQueue> table_lock_request_queue;
+  if (!no_table_lock) {
+    table_lock_request_queue = table_lock_map_[oid];
+  }
   table_lock_map_latch_.unlock();
-
+  if (no_table_lock) {
+    return false;
+  }
   std::scoped_lock lock(table_lock_request_queue->latch_);
   std::unordered_set<LockMode> found_lock_modes;
 
@@ -676,50 +721,48 @@ void LockManager::AbortTransaction(Transaction *txn, const AbortReason &abort_re
   txn->SetState(TransactionState::ABORTED);
   txn->UnlockTxn();
   TransactionAbortException exception(txn->GetTransactionId(), abort_reason);
-  THREAD_DEBUG_LOG("exception: %s", exception.GetInfo().data());
+  THREAD_DEBUG_LOG("Transaction %d aborted, exception: %s", txn->GetTransactionId(), exception.GetInfo().data());
   throw exception;
 }
 
 auto LockManager::RequestLock(Transaction *txn, const LockManager::LockMode &lock_mode,
                               const std::shared_ptr<LockRequestQueue> &request_queue,
                               std::list<LockRequest *>::iterator request_iter,
-                              std::unique_lock<std::mutex> &request_queue_lock) -> bool {
+                              std::unique_lock<std::mutex> &request_queue_lock) -> std::pair<bool, bool> {
   auto lock_request = *request_iter;
-  if (IsLockModeCauseWait(*request_queue, lock_mode, --(request_queue->request_queue_.end()))) {
+  if (IsLockModeCauseWait(*request_queue, lock_mode, request_iter)) {
+    THREAD_DEBUG_LOG("[thread T%ld] txn %d waits. Queue: %s", DEBUG_THREAD_ID, txn->GetTransactionId(),
+                     request_queue->ToString().c_str());
     txn->UnlockTxn();
-    request_queue_lock.unlock();
-    std::unique_lock cv_lock(request_queue->cv_mutex_);
-    THREAD_DEBUG_LOG("[thread T%ld] txn %d waits", DEBUG_THREAD_ID, txn->GetTransactionId());
-    waiting_transactions_latch_.lock();
-    waiting_transactions_.emplace(txn->GetTransactionId(), request_queue);
-    waiting_transactions_latch_.unlock();
-    request_queue->cv_.wait(cv_lock,
-                            [&request_queue, txn]() { return request_queue->wake_id_ == txn->GetTransactionId(); });
+    request_queue->cv_.wait(request_queue_lock, [&request_queue, txn]() {
+      THREAD_DEBUG_LOG(
+          "%s",
+          fmt::format("txn {} is notified. Queue: {}\n", txn->GetTransactionId(), request_queue->ToString()).c_str());
+      return request_queue->wake_id_ == txn->GetTransactionId();
+    });
     THREAD_DEBUG_LOG("[thread T%ld] txn %d wakes up", DEBUG_THREAD_ID, txn->GetTransactionId());
-    waiting_transactions_latch_.lock();
-    waiting_transactions_.erase(txn->GetTransactionId());
-    waiting_transactions_latch_.unlock();
     txn->LockTxn();
-    request_queue_lock.lock();
   }
+  auto want_wake = false;
   if (request_queue->request_queue_.back() != lock_request) {
     if (IsLockModeCompatible((*std::next(request_iter))->lock_mode_, lock_request->lock_mode_) ||
         txn->GetState() == TransactionState::ABORTED) {
       // If the later transactions in the waiting list can be compatible with this, we grant.
+      // Consider the case,for a resource, the request queue: X(granted), S(waiting), S(waiting).
       request_queue->wake_id_ = (*std::next(request_iter))->txn_id_;
-      request_queue->cv_.notify_all();
+      want_wake = true;
     }
   }
   if (txn->GetState() == TransactionState::ABORTED) {
     THREAD_DEBUG_LOG("[thread T%ld] txn %d was aborted.", DEBUG_THREAD_ID, txn->GetTransactionId());
     request_queue->request_queue_.erase(request_iter);
-    txn->UnlockTxn();
-    return false;
+    return {false, want_wake};
   }
   lock_request->granted_ = true;
-  return true;
+  return {true, want_wake};
 }
 
+// No lock is acquired in this function directly.
 auto LockManager::DepthFirstSearchCycle(txn_id_t source, txn_id_t &cycle_maker,
                                         const std::unordered_set<txn_id_t> &search_history) -> bool {
   if (waits_for_[source].empty()) {
@@ -737,43 +780,55 @@ auto LockManager::DepthFirstSearchCycle(txn_id_t source, txn_id_t &cycle_maker,
                      });
 }
 
+// No lock is locked in this function directly.
 void LockManager::BuildWaitForGraph() {
-  table_lock_map_latch_.lock();
   for (const auto &[_, request_queue] : table_lock_map_) {
     BuildWaitForGraphHelper(request_queue);
   }
-  table_lock_map_latch_.unlock();
-  row_lock_map_latch_.lock();
   for (const auto &[_, request_queue] : row_lock_map_) {
     BuildWaitForGraphHelper(request_queue);
   }
-  row_lock_map_latch_.unlock();
 }
 
+// Request queue latch is held in this function.
 void LockManager::BuildWaitForGraphHelper(const std::shared_ptr<LockRequestQueue> &request_queue) {
   std::scoped_lock queue_lock(request_queue->latch_);
   const auto &request_list = request_queue->request_queue_;
   auto first_wait = std::find_if(request_list.cbegin(), request_list.cend(),
-                                 [](const LockRequest *request) { return !request->granted_; });
+                                 [request_queue](const LockRequest *request) { return !request->granted_; });
   if (first_wait == request_list.cend()) {
     return;
   }
-  const auto txn_not_aborted = [](txn_id_t txn_id) {
-    return TransactionManager::GetTransaction(txn_id)->GetState() != TransactionState::ABORTED;
-  };
   std::for_each(request_list.cbegin(), first_wait,
-                [&txn_not_aborted, source = (*first_wait)->txn_id_, this](LockRequest *request) {
+                [source = (*first_wait)->txn_id_, this, request_queue](LockRequest *request) {
                   auto dest = request->txn_id_;
-                  if (txn_not_aborted(source) && txn_not_aborted(dest)) {
+                  if (TransactionManager::GetTransaction(source)->GetState() != TransactionState::ABORTED &&
+                      TransactionManager::GetTransaction(dest)->GetState() != TransactionState::ABORTED) {
                     AddEdge(source, dest);
                   }
                 });
+  waiting_transactions_[(*first_wait)->txn_id_].emplace(request_queue);
   for (auto waiting_request = std::next(first_wait); waiting_request != request_list.cend(); ++waiting_request) {
     auto source = (*waiting_request)->txn_id_;
     auto dest = (*std::prev(waiting_request))->txn_id_;
-    if (txn_not_aborted(source) && txn_not_aborted(dest)) {
+    waiting_transactions_[source].emplace(request_queue);
+    if (TransactionManager::GetTransaction(source)->GetState() != TransactionState::ABORTED &&
+        TransactionManager::GetTransaction(dest)->GetState() != TransactionState::ABORTED) {
       AddEdge(source, dest);
     }
+  }
+}
+
+auto LockManager::TransactionStateToString(const TransactionState &state) const -> std::string_view {
+  switch (state) {
+    case TransactionState::GROWING:
+      return {"GROWING"};
+    case TransactionState::SHRINKING:
+      return {"SHRINKING"};
+    case TransactionState::COMMITTED:
+      return {"COMMITTED"};
+    case TransactionState::ABORTED:
+      return {"ABORTED"};
   }
 }
 
@@ -782,8 +837,8 @@ auto LockManager::LockRequestQueue::ToString() -> std::string {
     return std::string{"empty lock request queue"};
   }
   std::stringstream stream;
-  stream << fmt::format("lock request queue({},{},{}) - size:{}:", request_queue_.front()->oid_,
-                        request_queue_.front()->rid_.GetPageId(), request_queue_.front()->rid_.GetSlotNum(),
+  stream << fmt::format("lock request queue({},{},{},wake_id={}) - size:{}:", request_queue_.front()->oid_,
+                        request_queue_.front()->rid_.GetPageId(), request_queue_.front()->rid_.GetSlotNum(), wake_id_,
                         request_queue_.size());
   for (const auto &request : request_queue_) {
     stream << fmt::format("(txn:{},mode:{},granted:{}) ", request->txn_id_,

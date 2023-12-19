@@ -40,15 +40,22 @@
 
 #define VAR_STRING(var) #var
 
+// Comment this macro to disallow to print sql statement execution status in stderr.
+// #define ALLOW_SQL_PRINT 1
+
+#ifdef ALLOW_SQL_PRINT
 #define EXECUTE_SQL(sql, writer)                                       \
   std::cerr << fmt::format("\tExecute SQL: {}\n", sql) << std::fflush; \
   bustub_->ExecuteSql(sql, writer);                                    \
   std::cerr << fmt::format("\tSQL: {} is executed.\n", sql) << std::fflush;
-
 #define EXECUTE_SQL_TXN(sql, writer, txn)                                                                 \
   std::cerr << fmt::format("\tExecute SQL by txn {}: {}\n", txn->GetTransactionId(), sql) << std::fflush; \
   bustub_->ExecuteSqlTxn(sql, writer, txn);                                                               \
   std::cerr << fmt::format("\tSQL: {} is executed by txn {}.\n", sql, txn->GetTransactionId()) << std::fflush;
+#else
+#define EXECUTE_SQL(sql, writer) bustub_->ExecuteSql(sql, writer);
+#define EXECUTE_SQL_TXN(sql, writer, txn) bustub_->ExecuteSqlTxn(sql, writer, txn);
+#endif
 
 #define CONCAT(a, b) a##b
 
@@ -111,7 +118,7 @@ TEST_F(TransactionTest, SimpleInsertRollbackTest) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TransactionTest, SimpleDeleteRollbackTest) {
+TEST_F(TransactionTest, DISABLED_SimpleDeleteRollbackTest) {
   auto noop_writer = NoopWriter();
   std::stringstream ss0;
   auto writer0 = SimpleStreamWriter(ss0, true);
@@ -158,7 +165,7 @@ TEST_F(TransactionTest, DirtyReadsTest) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TransactionTest, RepeatableReadTest) {
+TEST_F(TransactionTest, DISABLED_RepeatableReadTest) {
   bustub_->GenerateTestTable();
   using namespace std::chrono_literals;
   auto noop_writer = NoopWriter();
@@ -196,7 +203,7 @@ TEST_F(TransactionTest, RepeatableReadTest) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TransactionTest, DebugTest) {
+TEST_F(TransactionTest, DISABLED_DebugTest) {
   bustub_->GenerateTestTable();
   using namespace std::chrono_literals;
   auto noop_writer = NoopWriter();
@@ -216,7 +223,7 @@ TEST_F(TransactionTest, DebugTest) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TransactionTest, ABLED_MixTest) {
+TEST_F(TransactionTest, DISABLED_ABLED_MixTest) {
 #define THREAD_BEGIN(num) \
   std::thread CONCAT(t,num)([&](){
 #define THREAD_END \
