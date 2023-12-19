@@ -1,0 +1,10 @@
+Deadlock Detection Algorithm
+
+Basic idea:
+new class: node, edge, graph.
+Graph: ordered_map(node) nodes_;
+Node: ordered_map<Node> tails_;
+
+for each detection, we traverse the map from the txn with the min txn id to the one with max txn id in order.
+
+Note: youngest txn is the txn which has the min txn_id.

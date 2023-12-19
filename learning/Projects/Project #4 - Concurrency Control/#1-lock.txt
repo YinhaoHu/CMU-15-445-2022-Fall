@@ -1,0 +1,51 @@
+1) LOCK-TABLE
+
+  /**
+   * Algorithm
+   *
+   * If txn is aborted: return false.
+   *
+   * If a lock L on table oid was given to the txn:
+   *    If L.mode = lock_mode: return true.
+   *    Else if L.mode can be upgraded to lock_mode:
+   *        if there is another one txn upgrade this lock: abort txn and
+   *            throw TransactionAbortException(UPGRADE_CONFLICT).
+   *        else: upgrade.
+   *    Else: abort txn and throw TransactionAbortException(INCOMPATIBLE_UPGRADE).
+   *
+   * Else:
+   *    if lock_mode violated the isolation level and txn state restriction: throw the proper TransactionAbortException
+   *    else:
+   *        Add the lock_request to to queue
+   *        if the lock is compatible with all earlier locks: grant
+   *        else: wait
+   *
+   * Add the proper information of this lock to txn.
+   */
+
+
+2) UNLOCK-TABLE
+  /**
+   * Algorithm
+   *
+   * If txn does not a hold a lock on this table:
+   *    abort the txn and throw TransactionAbortException (ATTEMPTED_UNLOCK_BUT_NO_LOCK_HELD)
+   * Else if txn holds locks of the rows of the table:
+   *    abort the txn and throw TransactionAbortException (TABLE_UNLOCKED_BEFORE_UNLOCKING_ROWS)
+   * Else:
+   *    unlock the table and grand the lock to the waiting transactions if:
+   *        1) there are no more transactions locking the table.
+   *        2) there is at least one txn waiting for the lock.
+   *    update the state( See [UNLOCK NOTE] ) and the lock set of the txn.
+   */
+
+
+3) LOCK-ROW
+
+->special care: 1) table lock mode is appropriate; 2)only two modes.
+
+any other code is similar to the LOCK-TABLE
+
+
+
+4) UNLOCK-ROW

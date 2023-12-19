@@ -1,0 +1,43 @@
+******************************* LOCK **********************************
+
+   *    REPEATABLE_READ:
+   *        The transaction is required to take all locks.
+   *        All locks are allowed in the GROWING state
+   *        No locks are allowed in the SHRINKING state
+
+=> Allow: all modes.
+
+   *    READ_COMMITTED:
+   *        The transaction is required to take all locks.
+   *        All locks are allowed in the GROWING state
+   *        Only IS, S locks are allowed in the SHRINKING state
+   *
+
+=> Allow: all modes.
+
+   *    READ_UNCOMMITTED:
+   *        The transaction is required to take only IX, X locks.
+   *        X, IX locks are allowed in the GROWING state.
+   *        S, IS, SIX locks are never allowed
+
+=> Allow: X, IX.
+
+******************************* UNLOCK **********************************
+
+   *    REPEATABLE_READ:
+   *        Unlocking S/X locks should set the transaction state to SHRINKING
+
+=>Allow: IS, IX, SIX.
+
+   *    READ_COMMITTED:
+   *        Unlocking X locks should set the transaction state to SHRINKING.
+   *        Unlocking S locks does not affect transaction state.
+
+=>Allow: S.
+
+   *   READ_UNCOMMITTED:
+   *        Unlocking X locks should set the transaction state to SHRINKING.
+   *        S locks are not permitted under READ_UNCOMMITTED.
+
+=>ALlow: NONE.
+
